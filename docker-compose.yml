@@ -1,0 +1,61 @@
+version: "3.7"
+
+services:
+  web:
+    image: lung2001/transaction-system-poc-web:latest
+    environment:
+      - PORT=3000
+    volumes:
+      - ./web:/app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+      - redis
+    networks:
+      - backend
+
+  db:
+    image: postgres
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+    networks:
+      - backend
+
+  rabbitmq:
+    image: rabbitmq:3.7.8-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - backend
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    networks:
+      - backend
+
+  producer:
+    image: lung2001/transaction-system-poc-producer:latest
+    depends_on:
+      - rabbitmq
+      - redis
+    volumes:
+      - ./producer:/app
+    networks:
+      - backend
+
+  consumer:
+    image: lung2001/transaction-system-poc-consumer:latest
+    depends_on:
+      - rabbitmq
+      - db
+    volumes:
+      - ./consumer:/app
+    networks:
+      - backend
+
+networks:
+  backend:

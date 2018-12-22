@@ -1,0 +1,75 @@
+(This page auto-refreshes every 3 sec)
+<h1>Accounts</h1>
+
+<%= link_to "Start all producers", start_all_producers_path, method: :post %>
+<br>
+<%= link_to "Stop all producers", stop_all_producers_path, method: :post %>
+<br>
+
+<table border="1">
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Balance</th>
+    <th>Account Type</th>
+    <th>Is ON?</th>
+    <th></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @accounts.each do |acc| %>
+    <tr>
+      <td><%= acc['id'] %></td>
+      <td><%= acc['balance'] %></td>
+      <td><%= acc['account_type'] %></td>
+      <td><%= acc['is_on'] %></td>
+      <td><%= button_to("Toggle On/Off", toggle_producer_path, method: :post, params: { producer_id: acc['id'] }) unless acc['account_type'] == Account.account_types[:bank] %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+<%= link_to "Reset all (Clear transactions and assign random positive balance)", reset_all_path, method: :post %>
+<br>
+
+<h1>Last 50 Transactions</h1>
+
+<table border="1">
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Transferrer ID</th>
+    <th>Receiver ID</th>
+    <th>Transaction Type</th>
+    <th>Amount</th>
+    <th>Transferrer Balance</th>
+    <th>Receiver Balance</th>
+    <th>Status</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @transactions.each do |t| %>
+    <tr>
+      <td><%= t.id %></td>
+      <td><%= t.transferrer_account_id %></td>
+      <td><%= t.receiver_account_id %></td>
+      <td><%= t.transaction_type %></td>
+      <td><%= t.amount %></td>
+      <td><%= t.transferrer_balance %></td>
+      <td><%= t.receiver_balance %></td>
+      <td><%= t.status %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<script>
+    function timedRefresh(timeoutPeriod) {
+        setTimeout("location.reload(true);", timeoutPeriod);
+    }
+</script>
+
+<body onload="JavaScript:timedRefresh(3000);">
