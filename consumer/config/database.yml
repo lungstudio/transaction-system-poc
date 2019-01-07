@@ -11,5 +11,10 @@ default: &default
 development:
   <<: *default
 
+test:
+  <<: *default
+  database: transaction_system_test
+  host: <%= ENV['DB_TEST_HOST'] || 'localhost' %>
+
 production:
   <<: *default

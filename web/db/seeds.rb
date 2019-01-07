@@ -1,3 +1,6 @@
+# do not seed in test env
+return if Rails.env == 'test'
+
 min_initial_balance = ENV['MIN_INITIAL_BALANCE']&.to_i || 0
 max_initial_balance = ENV['MAX_INITIAL_BALANCE']&.to_i || 100
 

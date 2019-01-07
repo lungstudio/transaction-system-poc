@@ -82,3 +82,12 @@ The queue is set to be durable. If the consumer dies, the messages will be store
 
 You can access the RabbitMQ dashboard by [http://localhost:15672](http://localhost:15672), the username/password are `guest`/`guest`
 
+## Test (updated on 2019/01/08)
+Some test cases are written in RSpec for `consumer` and `web`. Follow the steps to run the test:
+1. make sure you have ruby installed
+2. run `docker-compose up -d redis db`
+3. in command line, cd to the `web` folder
+4. run `bundle install`
+5. run `rails db:reset RAILS_ENV=test`, to reset the test env database
+6. run `rspec`, the tests for web project will run
+7. cd to consumer folder and run `rspec`, the tests for consumer project will run

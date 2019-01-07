@@ -39,7 +39,7 @@ module TransactionHandler
 
     def make_transaction(transferrer_id, receiver_id, amount, transaction_type, status)
       transaction = nil
-      Account.transaction do
+      Account.transaction(requires_new: true) do
         transferrer = Account.lock.find(transferrer_id)
         receiver = Account.lock.find(receiver_id)
 
