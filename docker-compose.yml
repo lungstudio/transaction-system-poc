@@ -16,7 +16,10 @@ services:
       - backend
 
   db:
-    image: postgres
+    image: postgres:9.6-alpine
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
     volumes:
       - ./tmp/db:/var/lib/postgresql/data
     networks:
