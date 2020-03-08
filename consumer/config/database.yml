@@ -4,8 +4,8 @@ default: &default
   pool: 5
   host: <%= ENV['DB_HOST'] || 'db' %>
   port: <%= ENV['DB_PORT'] || 5432 %>
-  username: <%= ENV['DB_USERNAME'] || 'postgres' %>
-  password: <%= ENV['DB_PASSWORD'] || '' %>
+  username: <%= ENV['DB_USERNAME'] || 'user' %>
+  password: <%= ENV['DB_PASSWORD'] || 'pass' %>
   database: <%= ENV['DB_DATABASE'] || 'transaction_system' %>
 
 development:
@@ -14,7 +14,7 @@ development:
 test:
   <<: *default
   database: transaction_system_test
-  host: <%= ENV['DB_TEST_HOST'] || 'localhost' %>
+  host: <%= ENV['DB_TEST_HOST'] || 'db' %>
 
 production:
   <<: *default

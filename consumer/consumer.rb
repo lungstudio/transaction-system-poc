@@ -24,7 +24,7 @@ begin
   logger.info("[consumer] START")
   channel = connection.create_channel
   exchange = channel.direct(TRANSACTION_EXCHANGE_NAME)
-  queue = channel.queue('consumer_queue', druable: true, auto_delete: false)
+  queue = channel.queue('consumer_queue', durable: true, auto_delete: false)
   queue.bind(exchange, routing_key: TRANSACTION_MQ_ROUTE_KEY)
 
   begin
